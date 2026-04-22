@@ -190,8 +190,8 @@ main {
 }
 
 .intro-photo {
-    width: 180px;
-    height: auto;          /* was: height: 160px; */
+    width: 160px;
+    height: 160px;
     flex-shrink: 0;
     border-radius: 2px;
     overflow: hidden;
@@ -202,10 +202,10 @@ main {
 
 .intro-photo img {
     width: 100%;
-    height: auto;          /* was: height: 100%; */
+    height: 100%;
+    object-fit: cover;
     display: block;
     filter: saturate(0.92) contrast(1.02);
-    /* delete the line that says: object-fit: cover; */
 }
 
 .photo-placeholder {
@@ -503,4 +503,254 @@ main {
 ::selection {
     background: var(--accent);
     color: var(--paper);
+}
+
+/* =========================================================
+   Tab navigation (Academic / Personal split)
+   ========================================================= */
+.nav-tabs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    border-left: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+    padding: 0 0.85rem;
+    margin-right: auto;
+    margin-left: 0.75rem;
+}
+
+.nav-tabs a {
+    font-family: var(--font-display);
+    font-size: 0.92rem;
+    font-weight: 400;
+    letter-spacing: 0.005em;
+    color: var(--ink-mute);
+    text-decoration: none;
+    padding: 0.25rem 0.55rem;
+    border-radius: 2px;
+    transition: color 0.18s ease, background 0.18s ease;
+}
+
+.nav-tabs a:hover {
+    color: var(--accent);
+    background: var(--paper-deep);
+}
+
+.nav-tabs a.is-current {
+    color: var(--ink);
+    font-style: italic;
+    background: var(--paper-deep);
+}
+
+@media (max-width: 640px) {
+    .nav-tabs {
+        border: none;
+        padding: 0;
+        margin: 0;
+        gap: 0;
+    }
+    .nav-tabs a { padding: 0.2rem 0.4rem; font-size: 0.85rem; }
+}
+
+/* =========================================================
+   Personal page — credential badges (coaching section)
+   ========================================================= */
+.credential-list {
+    list-style: none;
+    margin: 0.5rem 0 1.2rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.credential-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+}
+
+.credential-badge {
+    display: inline-block;
+    min-width: 3rem;
+    text-align: center;
+    padding: 0.15rem 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+/* =========================================================
+   Personal page — match video grid
+   ========================================================= */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.75rem 1.25rem;
+    margin-top: 0.5rem;
+}
+
+.video-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    transition: transform 0.25s ease;
+}
+
+.video-card:hover { transform: translateY(-2px); }
+
+.video-thumb {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    border-radius: 2px;
+    overflow: hidden;
+    background:
+        linear-gradient(135deg, var(--paper-deep), var(--rule));
+    box-shadow: 0 1px 0 var(--rule),
+                0 14px 28px -18px rgba(27, 26, 23, 0.28);
+    transition: box-shadow 0.25s ease;
+}
+
+.video-thumb:hover {
+    box-shadow: 0 1px 0 var(--rule),
+                0 20px 36px -18px rgba(27, 26, 23, 0.42);
+}
+
+.video-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.92) contrast(1.03);
+    transition: transform 0.35s ease;
+}
+
+.video-thumb:hover img { transform: scale(1.03); }
+
+/* Fallback when a placeholder VIDEO_ID yields a 120x90 YouTube "no image" */
+.video-thumb img.video-thumb-fallback {
+    display: none;
+}
+
+.video-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.video-thumb::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.35));
+    pointer-events: none;
+}
+
+.video-thumb:hover .video-play {
+    transform: scale(1.15);
+}
+
+.video-meta { padding: 0 0.1rem; }
+
+.video-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.3;
+    margin: 0 0 0.2rem;
+}
+
+.video-title a {
+    color: var(--ink);
+    text-decoration: none;
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0 1px;
+    padding-bottom: 1px;
+    transition: background-size 0.2s ease, color 0.2s ease;
+}
+
+.video-card:hover .video-title a {
+    background-size: 100% 1px;
+    color: var(--accent);
+}
+
+.video-caption {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--ink-mute);
+    line-height: 1.4;
+}
+
+/* =========================================================
+   Personal page — intro tweaks
+   ========================================================= */
+.intro-personal {
+    grid-template-columns: 1fr;  /* no photo, so full width */
+    padding-top: 2rem;
+}
+
+.intro-personal .display-name {
+    font-size: clamp(2.1rem, 5vw, 2.8rem);
+}
+
+/* =========================================================
+   Personal page — bagging stats tiles
+   ========================================================= */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 0.8rem;
+    margin: 0.5rem 0 2rem;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.9rem 1rem;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    transition: border-color 0.18s ease;
+}
+
+.stat-item:hover { border-color: var(--accent); }
+
+.stat-number {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 96;
+    font-size: 1.9rem;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+}
+
+.stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
 }
